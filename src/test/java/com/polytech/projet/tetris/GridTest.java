@@ -21,9 +21,4 @@ public class GridTest {
       assertEquals(1, testGrid.get(0,0));
   }
 
-  @Test
-  public void  {
-
-  }
-
 }
