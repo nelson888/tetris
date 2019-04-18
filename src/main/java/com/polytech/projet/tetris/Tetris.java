@@ -6,7 +6,7 @@ public class Tetris extends Grid {
   public static final int EMPTY = 0;
 
   public Tetris() {
-    super(24, 10);
+    super(10, 24);
   }
 
   public void nextFrame() {
