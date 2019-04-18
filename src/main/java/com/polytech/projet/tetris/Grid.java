@@ -17,7 +17,8 @@ public class Grid {
   }
 
   public void set(int i, int j, int value){
-    if (i>=0 && i<)
-    this.grid[i][j] = value;
+    if (i>=0 && i<this.grid.length && j>=0 && j<this.grid[0].length){
+      this.grid[i][j] = value;
+    }
   }
 }
