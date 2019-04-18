@@ -3,6 +3,12 @@ package com.polytech.projet.tetris.shape;
 import com.polytech.projet.tetris.Direction;
 import com.polytech.projet.tetris.Grid;
 
+/**
+ *   *
+ *   *
+ *   *
+ *   *
+ */
 public class IShape extends AbstractShape {
 
   private static final int LENGTH = 4;

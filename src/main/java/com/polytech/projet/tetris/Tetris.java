@@ -10,8 +10,8 @@ import static com.polytech.projet.tetris.Cell.FILLED;
 
 public class Tetris extends Grid {
 
-  public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-  public static final String ANSI_RESET = "\u001B[0m";
+  private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+  private static final String ANSI_RESET = "\u001B[0m";
 
   private static final String STRING = "  ";
   private static final Map<Cell, String> STRING_MAP;

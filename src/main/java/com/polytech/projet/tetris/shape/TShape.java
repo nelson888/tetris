@@ -2,6 +2,11 @@ package com.polytech.projet.tetris.shape;
 
 import com.polytech.projet.tetris.Grid;
 
+/**
+ *   *
+ *   * *
+ *   *
+ */
 public class TShape extends RotatableShape {
 
   private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (i, j) -> i == 1 && (j == 0 || j == 2));
