@@ -2,8 +2,8 @@ package com.polytech.projet.tetris;
 
 public class Grid {
 
-  private final int m;
-  private final int n;
+  private final int m; // Nombre de lignes
+  private final int n; // Nombre de colonnes
   private int[][] grid;
 
   public Grid(int m, int n) {
@@ -12,13 +12,13 @@ public class Grid {
     grid = new int[m][n];
   }
 
-  public int get(int i, int j) {
-    return grid[i][j];
+  public int get(int line, int col) {
+    return grid[line][col];
   }
 
-  public void set(int i, int j, int value) {
-    if (i>=0 && i<this.grid.length && j>=0 && j<this.grid[0].length){
-      this.grid[i][j] = value;
+  public void set(int line, int col, int value) {
+    if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
+      this.grid[line][col] = value;
     }
   }
 

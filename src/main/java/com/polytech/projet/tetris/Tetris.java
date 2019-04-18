@@ -13,6 +13,13 @@ public class Tetris extends Grid {
 
   }
 
+  private boolean isLineEmpty(int j){
+      for(int i = 0; i< getN(); i++){
+      }
+
+      return false;
+  }
+
   private boolean isLineFilled(int j) {
     for (int i = 0; i < getN(); i++) {
       if (get(i, j) == EMPTY) {
