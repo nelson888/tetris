@@ -9,4 +9,7 @@ public class Tetris extends Grid {
     super(10, 24);
   }
 
+  public void nextFrame() {
+
+  }
 }

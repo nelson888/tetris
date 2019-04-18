@@ -5,7 +5,7 @@ import com.polytech.projet.tetris.Tetris;
 
 import java.util.function.BiFunction;
 
-abstract class AbstractShape implements Shape {
+public abstract class AbstractShape implements Shape {
 
   protected Grid grid;
 
