@@ -22,5 +22,15 @@ public class TetrisTest {
     }
   }
 
+  public void lineFilledTest() {
 
+  }
+
+  public void lineNotEntirelyFilledTest() {
+
+  }
+
+  public void lineFilledUnderLineNotEntirelyFilled() {
+
+  }
 }

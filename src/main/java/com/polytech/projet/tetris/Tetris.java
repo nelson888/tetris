@@ -12,4 +12,13 @@ public class Tetris extends Grid {
   public void nextFrame() {
 
   }
+
+  private boolean isLineFilled(int j) {
+    for (int i = 0; i < getN(); i++) {
+      if (get(i, j) == EMPTY) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
