@@ -1,5 +1,6 @@
 package com.polytech.projet.tetris.shape;
 
+import com.polytech.projet.tetris.Cell;
 import com.polytech.projet.tetris.Grid;
 import com.polytech.projet.tetris.Tetris;
 
@@ -30,7 +31,7 @@ public abstract class AbstractShape implements Shape {
     Grid grid = new Grid(n, m);
     for (int j = 0; j < grid.getM(); j++) {
       for (int i = 0; i < grid.getN(); i++) {
-        grid.set(i, j, function.apply(i, j) ? Tetris.FILLED : Tetris.EMPTY);
+        grid.set(i, j, function.apply(i, j) ? Cell.FILLED : Cell.EMPTY);
       }
     }
     return grid;

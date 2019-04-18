@@ -1,9 +1,27 @@
 package com.polytech.projet.tetris;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.polytech.projet.tetris.Cell.EMPTY;
+import static com.polytech.projet.tetris.Cell.FILLED;
+
+
 public class Tetris extends Grid {
 
-  public static final int FILLED = 1;
-  public static final int EMPTY = 0;
+  public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+  public static final String ANSI_RESET = "\u001B[0m";
+
+  private static final String STRING = "  ";
+  private static final Map<Cell, String> STRING_MAP;
+
+  static {
+    Map<Cell, String> map = new HashMap<>();
+    map.put(Cell.EMPTY, STRING);
+    map.put(Cell.FILLED, ANSI_WHITE_BACKGROUND + STRING + ANSI_RESET);
+    STRING_MAP = Collections.unmodifiableMap(map);
+  }
 
   public Tetris() {
     super(10, 24);
@@ -60,5 +78,15 @@ public class Tetris extends Grid {
 
   private void emptyCell(int i, int j){
 
+  }
+
+
+  public void print() {
+    for (int line = 0; line < getM(); line++) {
+      for (int col = 0; col < getN(); col++) {
+        System.out.print(STRING_MAP.get(get(line, col)));
+      }
+      System.out.println();
+    }
   }
 }

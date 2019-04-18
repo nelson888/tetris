@@ -8,10 +8,10 @@ public class Main {
     Tetris tetris = new Tetris();
 
     for (int i = 0; i < tetris.getN(); i++) {
-      tetris.set(tetris.getM() - 1, i, Tetris.FILLED);
+      tetris.set(tetris.getM() - 1, i, Cell.FILLED);
     }
-    tetris.set(tetris.getM() - 2, 0, Tetris.FILLED);
+    tetris.set(tetris.getM() - 2, 0, Cell.FILLED);
 
-    TetrisPrinter.print(tetris);
+    tetris.print();
   }
 }

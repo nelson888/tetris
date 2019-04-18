@@ -1,8 +1,8 @@
 package com.polytech.projet.tetris;
 
 import static org.junit.Assert.assertEquals;
-import static com.polytech.projet.tetris.Tetris.FILLED;
-import static com.polytech.projet.tetris.Tetris.EMPTY;
+import static com.polytech.projet.tetris.Cell.FILLED;
+import static com.polytech.projet.tetris.Cell.EMPTY;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,13 +33,13 @@ public class TetrisTest {
     }
     tetris.nextFrame();
     for (int col = 0; col < tetris.getN(); col++) {
-      assertEquals("Should be equal", Tetris.EMPTY, tetris.get(line, col));
+      assertEquals("Should be equal", Cell.EMPTY, tetris.get(line, col));
     }
   }
 
   @Test
   public void lineNotEntirelyFilledTest() {
-    int[] line = new int[tetris.getM()];
+    Cell[] line = new Cell[tetris.getM()];
     for (int col = 0; col < tetris.getN(); col++) {
       line[col] = col > 0 ? FILLED : EMPTY; //not entirely filled line
     }
@@ -58,7 +58,7 @@ public class TetrisTest {
 
   @Test
   public void lineFilledUnderLineNotEntirelyFilled() {
-    int[] line = new int[tetris.getM()];
+    Cell[] line = new Cell[tetris.getM()];
     for (int col = 0; col < tetris.getN(); col++) {
       line[col] = col > 0 ? FILLED : EMPTY; //not entirely filled line
     }
