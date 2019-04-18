@@ -10,22 +10,38 @@ public class Tetris extends Grid {
   }
 
   public void nextFrame() {
-
-  }
-
-  private boolean isLineEmpty(int j){
       for(int i = 0; i< getN(); i++){
+          if(isLineFilled(i)){
+              emptyLine(i);
+          }
       }
-
-      return false;
   }
 
-  private boolean isLineFilled(int j) {
-    for (int i = 0; i < getN(); i++) {
+  private boolean isLineEmpty(int i){
+      for(int j = 0; j< getM();j++){
+          if (get(i,j) == FILLED){
+              return false;
+          }
+      }
+      return true;
+  }
+
+  private boolean isLineFilled(int i) {
+    for (int j = 0; j < getN(); j++) {
       if (get(i, j) == EMPTY) {
         return false;
       }
     }
     return true;
+  }
+
+  private void emptyLine(int i){
+      for (int j = 0; j<getN(); j++){
+          set(i,j,EMPTY);
+      }
+  }
+
+  private void emptyCell(int i, int j){
+
   }
 }

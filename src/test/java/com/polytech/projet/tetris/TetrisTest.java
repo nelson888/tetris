@@ -28,11 +28,11 @@ public class TetrisTest {
   @Test
   public void lineFilledTest() {
     int line = 4;
-    for (int col = 0; col < tetris.getM(); col++) {
+    for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(line, col, FILLED);
     }
     tetris.nextFrame();
-    for (int col = 0; col < tetris.getM(); col++) {
+    for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", Tetris.EMPTY, tetris.get(line, col));
     }
   }
