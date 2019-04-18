@@ -1,4 +1,24 @@
 package com.polytech.projet.tetris.shape;
 
-public class RotatableShape {
+import com.polytech.projet.tetris.Direction;
+import com.polytech.projet.tetris.Grid;
+
+public abstract class RotatableShape extends AbstractShape {
+
+  private static final int POSSIBLE_ROTATIONS = 4;
+
+  private int gridIndex;
+
+  public RotatableShape(Grid grid) {
+    super(grid);
+    this.gridIndex = 0;
+  }
+
+  @Override
+  public final void rotate(Direction direction) {
+    gridIndex = (gridIndex + direction.toInt()) % POSSIBLE_ROTATIONS;
+    grid = getGridAt(gridIndex);
+  }
+
+  protected abstract Grid getGridAt(int i);
 }
