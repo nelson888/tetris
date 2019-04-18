@@ -16,7 +16,9 @@ public class GridTest {
 
   @Test
   public void setOneCell(){
-
+      Grid testGrid  = new Grid(1,1);
+      testGrid.set(0,0, 1);
+      assertEquals(1, testGrid.get(0,0));
   }
 
 }
