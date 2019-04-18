@@ -19,6 +19,8 @@ public class Grid {
   public void set(int line, int col, int value) {
     if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
       this.grid[line][col] = value;
+    } else {
+      throw new IndexOutOfBoundsException(String.format("Index in out (%d, %d) of bound", line, col));
     }
   }
 
