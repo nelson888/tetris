@@ -21,4 +21,12 @@ public class Grid {
       this.grid[i][j] = value;
     }
   }
+
+  public int getM() {
+    return m;
+  }
+
+  public int getN() {
+    return n;
+  }
 }
