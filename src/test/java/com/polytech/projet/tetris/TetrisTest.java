@@ -1,17 +1,25 @@
 package com.polytech.projet.tetris;
 
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
 public class TetrisTest {
 
-  private final int n;
-  private final boolean[][] grid;
+  private Tetris tetris;
 
-  public TetrisTest(int n) {
-    this.n = n;
-    grid = new boolean[n][n];
+  @Before
+  public void init() {
+    tetris = new Tetris();
   }
 
-  public void nextFrame() {
-
+  @Test
+  public void emptyGridTest() {
+    for (int j = 0; j < tetris.getM(); j++) {
+      for (int i = 0; i < tetris.getN(); i++) {
+        assertEquals("Should be empty", Tetris.EMPTY, tetris.get(i, j));
+      }
+    }
   }
 
 

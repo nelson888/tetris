@@ -1,10 +1,12 @@
 package com.polytech.projet.tetris;
 
-public class Tetris {
+public class Tetris extends Grid {
 
-  private final Grid grid;
+  public static final int FILLED = 1;
+  public static final int EMPTY = 0;
 
-  public Tetris(int n) {
-    grid = new Grid(10, 24);
+  public Tetris() {
+    super(10, 24);
   }
+
 }
