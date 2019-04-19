@@ -1,7 +1,7 @@
 package com.polytech.projet.tetris.shape;
 
-import com.polytech.projet.tetris.Direction;
-import com.polytech.projet.tetris.Grid;
+import com.polytech.projet.tetris.data.Direction;
+import com.polytech.projet.tetris.grid.Grid;
 
 public interface Shape {
 

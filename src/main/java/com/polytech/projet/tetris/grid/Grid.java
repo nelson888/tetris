@@ -1,4 +1,4 @@
-package com.polytech.projet.tetris;
+package com.polytech.projet.tetris.grid;
 
 import java.util.Arrays;
 

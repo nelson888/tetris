@@ -1,6 +1,6 @@
 package com.polytech.projet.tetris.shape;
 
-import com.polytech.projet.tetris.Direction;
+import com.polytech.projet.tetris.data.Direction;
 
 import java.util.Collections;
 import java.util.HashMap;

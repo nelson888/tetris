@@ -1,17 +1,23 @@
 package com.polytech.projet.tetris;
 
+import com.polytech.projet.tetris.data.Command;
+import com.polytech.projet.tetris.data.Direction;
+import com.polytech.projet.tetris.grid.Cell;
+import com.polytech.projet.tetris.grid.Grid;
 import com.polytech.projet.tetris.shape.Shape;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.polytech.projet.tetris.Cell.EMPTY;
-import static com.polytech.projet.tetris.Cell.FILLED;
+import static com.polytech.projet.tetris.grid.Cell.EMPTY;
+import static com.polytech.projet.tetris.grid.Cell.FILLED;
 
 
 public class Tetris extends Grid {
 
+  public static final int WIDTH = 10;
+  public static final int HEIGHT = 24;
   private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
   private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
   private static final String ANSI_RESET = "\u001B[0m";
@@ -29,7 +35,7 @@ public class Tetris extends Grid {
   private Shape shape;
 
   public Tetris() {
-    super(24, 10);
+    super(HEIGHT, WIDTH);
   }
 
   public void nextFrame(Command command) {

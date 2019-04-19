@@ -1,4 +1,6 @@
 package com.polytech.projet.tetris;
+import com.polytech.projet.tetris.grid.Cell;
+import com.polytech.projet.tetris.grid.Grid;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;

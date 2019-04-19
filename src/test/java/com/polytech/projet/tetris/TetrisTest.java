@@ -1,12 +1,13 @@
 package com.polytech.projet.tetris;
 
 import static org.junit.Assert.assertEquals;
-import static com.polytech.projet.tetris.Cell.FILLED;
-import static com.polytech.projet.tetris.Cell.EMPTY;
+import static com.polytech.projet.tetris.grid.Cell.FILLED;
+import static com.polytech.projet.tetris.grid.Cell.EMPTY;
 
+import com.polytech.projet.tetris.data.Command;
+import com.polytech.projet.tetris.grid.Cell;
 import com.polytech.projet.tetris.shape.Shape;
 import com.polytech.projet.tetris.shape.Square;
-import com.polytech.projet.tetris.shape.TShape;
 import org.junit.Before;
 import org.junit.Test;
 

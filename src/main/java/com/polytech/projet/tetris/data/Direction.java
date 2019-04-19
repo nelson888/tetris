@@ -1,4 +1,4 @@
-package com.polytech.projet.tetris;
+package com.polytech.projet.tetris.data;
 
 public enum Direction {
   LEFT {
@@ -21,15 +21,7 @@ public enum Direction {
     public Direction opposite() {
       return LEFT;
     }
-  }, DOWN {
-    @Override
-    public int toInt() { return 0; }
-
-    @Override
-    public Direction opposite() { return null; }
   };
-
-
 
   public abstract int toInt();
   public abstract Direction opposite();

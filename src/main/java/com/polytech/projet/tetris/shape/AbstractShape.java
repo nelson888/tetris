@@ -1,7 +1,7 @@
 package com.polytech.projet.tetris.shape;
 
-import com.polytech.projet.tetris.Cell;
-import com.polytech.projet.tetris.Grid;
+import com.polytech.projet.tetris.grid.Cell;
+import com.polytech.projet.tetris.grid.Grid;
 
 import java.util.function.BiFunction;
 

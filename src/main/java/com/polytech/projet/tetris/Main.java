@@ -1,7 +1,6 @@
 package com.polytech.projet.tetris;
 
-import com.polytech.projet.tetris.shape.LShape;
-import com.polytech.projet.tetris.shape.Square;
+import com.polytech.projet.tetris.data.Command;
 import com.polytech.projet.tetris.shape.TShape;
 
 import java.util.Scanner;
