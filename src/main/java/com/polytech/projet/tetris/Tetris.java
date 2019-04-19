@@ -32,8 +32,8 @@ public class Tetris extends Grid {
     super(24, 10);
   }
 
-  public void nextFrame(Direction dir) {
-      switch (dir){
+  public void nextFrame(Command command) {
+      switch (command){
           case DOWN:
               for(int i = getM()-1; i>=0; i--){
                   if(isLineFilled(i)){
@@ -45,19 +45,30 @@ public class Tetris extends Grid {
                       shape.setLine(shape.getLine() + 1);
                   } else {
                       putInGrid(shape);
+                      shape = null;
                   }
               }
               break;
           case LEFT:
-              if (canMoveLeftRight(shape, dir)){
+              if (canMoveLeftRight(shape, command.toDirection())){
                     shape.setColumn(shape.getColumn()-1);
               }
               break;
           case RIGHT:
-              if (canMoveLeftRight(shape, dir)){
+              if (canMoveLeftRight(shape, command.toDirection())){
                   shape.setColumn(shape.getColumn()+1);
               }
               break;
+        case ROTATE_LEFT:
+          if (canRotate(shape, Direction.LEFT)) {
+            shape.rotate(Direction.LEFT);
+          }
+          break;
+        case ROTATE_RIGHT:
+          if (canRotate(shape, Direction.RIGHT)) {
+            shape.rotate(Direction.RIGHT);
+          }
+          break;
       }
   }
 
@@ -100,6 +111,13 @@ public class Tetris extends Grid {
               break;
       }
       return collides;
+  }
+
+  private boolean canRotate(Shape shape, Direction direction) {
+    shape.rotate(direction);
+    boolean canRotate = shapeNotColliding();
+    shape.rotate(direction.opposite());
+    return canRotate;
   }
 
   private boolean shapeNotColliding() {
@@ -176,7 +194,7 @@ public class Tetris extends Grid {
       for (int col = 0; col < getN(); col++) {
         if (isInShapeGrid(line, col)) {
           Grid shapeGrid = shape.getGrid();
-          int l = line - shape.getLine() + 1;
+          int l = line - shape.getLine() + shape.getM() - 1;
           int c = col - shape.getColumn();
           Cell cell = shapeGrid.getSafe(l, c);
           System.out.print(cell == FILLED ? SHAPE_STRING : STRING_MAP.get(get(line, col)));
@@ -203,6 +221,9 @@ public class Tetris extends Grid {
   }
 
   private boolean isInShapeGrid(int line, int col) {
+    if (shape == null) {
+      return false;
+    }
     int left = shape.getColumn();
     int right = shape.getColumn() + shape.getN() - 1;
     int up = shape.getLine() - shape.getM() + 1;

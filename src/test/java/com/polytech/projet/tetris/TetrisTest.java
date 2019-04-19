@@ -6,6 +6,7 @@ import static com.polytech.projet.tetris.Cell.EMPTY;
 
 import com.polytech.projet.tetris.shape.Shape;
 import com.polytech.projet.tetris.shape.Square;
+import com.polytech.projet.tetris.shape.TShape;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(line, col, FILLED);
     }
-    tetris.nextFrame(Direction.DOWN);
+    tetris.nextFrame(Command.DOWN);
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", Cell.EMPTY, tetris.get(line, col));
     }
@@ -60,7 +61,7 @@ public class TetrisTest {
       tetris.set(l, col, line[col]);
     }
 
-    tetris.nextFrame(Direction.DOWN);
+    tetris.nextFrame(Command.DOWN);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l, col));
@@ -80,7 +81,7 @@ public class TetrisTest {
     }
     tetris.setLine(l + 1, FILLED_LINE);
 
-    tetris.nextFrame(Direction.DOWN);
+    tetris.nextFrame(Command.DOWN);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l + 1, col));
@@ -91,7 +92,7 @@ public class TetrisTest {
   public void shapeFallTest() {
     Shape shape = new Square();
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.DOWN);
+    tetris.nextFrame(Command.DOWN);
     assertEquals("Should have went down", 1, shape.getLine());
     assertEquals("Shouldn't have moved", 0, shape.getColumn());
   }
@@ -102,7 +103,7 @@ public class TetrisTest {
     int column = 1;
     shape.setColumn(column);
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.LEFT);
+    tetris.nextFrame(Command.LEFT);
     assertEquals("Should've went left",column - 1,shape.getColumn());
     assertEquals("Shouldn'thave moved", 0,shape.getLine());
   }
@@ -112,7 +113,7 @@ public class TetrisTest {
     Shape shape = new Square();
     shape.setColumn(0);
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.LEFT);
+    tetris.nextFrame(Command.LEFT);
     assertEquals("Shouldn'thave moved",0,shape.getColumn());
     assertEquals("Shouldn'thave moved", 0,shape.getLine());
   }
@@ -122,7 +123,7 @@ public class TetrisTest {
     Shape shape = new Square();
     shape.setColumn(tetris.getN()-(1+shape.getN()));
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.RIGHT);
+    tetris.nextFrame(Command.RIGHT);
 
     assertEquals("Should've moved",tetris.getN()-shape.getN(),shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
@@ -133,11 +134,10 @@ public class TetrisTest {
     Shape shape = new Square();
     shape.setColumn(tetris.getN()-shape.getN());
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.RIGHT);
+    tetris.nextFrame(Command.RIGHT);
 
     assertEquals("Shouldn't have moved", tetris.getN()-shape.getN(), shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
-
   }
 
   @Test
@@ -147,7 +147,7 @@ public class TetrisTest {
     int column = 4;
     shape.setColumn(column);
     tetris.setShape(shape);
-    tetris.nextFrame(Direction.DOWN);
+    tetris.nextFrame(Command.DOWN);
 
     assertEquals("Should have went down", tetris.getM() - 1, shape.getLine());
     assertEquals("Shouldn't have moved", column, shape.getColumn());

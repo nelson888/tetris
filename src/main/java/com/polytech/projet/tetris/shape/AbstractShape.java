@@ -29,10 +29,10 @@ public abstract class AbstractShape implements Shape {
   }
 
   static Grid newShapeGrid(int n, int m, BiFunction<Integer, Integer, Boolean> initializer) {
-    Grid grid = new Grid(n, m);
-    for (int j = 0; j < grid.getM(); j++) {
-      for (int i = 0; i < grid.getN(); i++) {
-        grid.set(i, j, initializer.apply(i, j) ? Cell.FILLED : Cell.EMPTY);
+    Grid grid = new Grid(m, n);
+    for (int line = 0; line < grid.getM(); line++) {
+      for (int col = 0; col < grid.getN(); col++) {
+        grid.set(line, col, initializer.apply(line, col) ? Cell.FILLED : Cell.EMPTY);
       }
     }
     return grid;

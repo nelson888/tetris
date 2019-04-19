@@ -61,4 +61,18 @@ public class Grid {
   public int getN() {
     return n;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(String.format("(%d, %d)", m, n));
+    for (int line = 0; line < getM(); line++) {
+      builder.append('\n');
+      for (int col = 0; col < getN(); col++) {
+        builder.append(get(line, col))
+          .append("\t");
+      }
+    }
+    return builder.toString();
+  }
 }

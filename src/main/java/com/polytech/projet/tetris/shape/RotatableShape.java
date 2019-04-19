@@ -17,6 +17,9 @@ public abstract class RotatableShape extends AbstractShape {
   @Override
   public final void rotate(Direction direction) {
     gridIndex = (gridIndex + direction.toInt()) % POSSIBLE_ROTATIONS;
+    if (gridIndex == -1) {
+      gridIndex = 3;
+    }
     grid = getGridAt(gridIndex);
   }
 
