@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static com.polytech.projet.tetris.Cell.FILLED;
 import static com.polytech.projet.tetris.Cell.EMPTY;
 
+import com.polytech.projet.tetris.shape.Shape;
+import com.polytech.projet.tetris.shape.Square;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,6 +75,35 @@ public class TetrisTest {
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l + 1, col));
+    }
+  }
+
+  @Test
+  public void shapeFallTest() {
+    Shape shape = new Square();
+    tetris.setShape(shape);
+    tetris.nextFrame();
+    assertEquals("Should have went down", 1, shape.getLine());
+    assertEquals("Shouldn't have moved", 0, shape.getColumn());
+  }
+
+
+  @Test
+  public void shapeInGridTest() { //when shape cannot fall, it is stored in grid
+    Shape shape = new Square();
+    shape.setLine(tetris.getM() - 1);
+    shape.setColumn(4);
+    tetris.setShape(shape);
+    tetris.print();
+    tetris.nextFrame();
+//    tetris.print();
+
+    assertEquals("Should have went down", tetris.getM() - 1, shape.getLine());
+    assertEquals("Shouldn't have moved", 4, shape.getColumn());
+    for (int line = 0; line < shape.getM(); line++) {
+      for (int col = 0; col < shape.getN(); col++) {
+        assertEquals("Should have went down", tetris.get(shape.getLine() - line, shape.getColumn() + col), FILLED);
+      }
     }
   }
 }

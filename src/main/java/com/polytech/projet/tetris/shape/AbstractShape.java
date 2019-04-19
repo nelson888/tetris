@@ -8,6 +8,8 @@ import java.util.function.BiFunction;
 public abstract class AbstractShape implements Shape {
 
   protected Grid grid;
+  private int l;
+  private int c;
 
   public AbstractShape(Grid grid) {
     this.grid = grid;
@@ -34,6 +36,26 @@ public abstract class AbstractShape implements Shape {
       }
     }
     return grid;
+  }
+
+  @Override
+  public int getColumn() {
+    return c;
+  }
+
+  @Override
+  public int getLine() {
+    return l;
+  }
+
+  @Override
+  public void setColumn(int c) {
+    this.c = c;
+  }
+
+  @Override
+  public void setLine(int l) {
+    this.l = l;
   }
 
 }

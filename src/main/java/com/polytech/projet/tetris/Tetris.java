@@ -1,5 +1,7 @@
 package com.polytech.projet.tetris;
 
+import com.polytech.projet.tetris.shape.Shape;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,18 +12,22 @@ import static com.polytech.projet.tetris.Cell.FILLED;
 
 public class Tetris extends Grid {
 
+  private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
   private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
   private static final String ANSI_RESET = "\u001B[0m";
 
   private static final String STRING = "  ";
   private static final Map<Cell, String> STRING_MAP;
 
+  private static final String SHAPE_STRING = ANSI_BLUE_BACKGROUND + STRING + ANSI_RESET;
   static {
     Map<Cell, String> map = new HashMap<>();
     map.put(Cell.EMPTY, STRING);
     map.put(Cell.FILLED, ANSI_WHITE_BACKGROUND + STRING + ANSI_RESET);
     STRING_MAP = Collections.unmodifiableMap(map);
   }
+
+  private Shape shape;
 
   public Tetris() {
     super(10, 24);
@@ -32,8 +38,48 @@ public class Tetris extends Grid {
           if(isLineFilled(i)){
               dropEverythingFrom(i);
           }
-
       }
+      if (shape != null) {
+        if (canFall(shape)) {
+          shape.setLine(shape.getLine() + 1);
+        } else {
+          putInGrid(shape);
+        }
+      }
+  }
+
+  private boolean canFall(Shape shape) {
+    if (shape.getLine() == getM()- 1) {
+      return false;
+    }
+
+    shape.setLine(shape.getLine() + 1); //descend la shape et voit si il y a collision
+    boolean collides = shapeCollides();
+    shape.setLine(shape.getLine() - 1);
+    return collides;
+  }
+
+  private boolean shapeCollides() {
+    Grid shapeGrid = shape.getGrid();
+    for (int line = 0; line < shapeGrid.getM(); line++) {
+      for (int col = 0; col < shapeGrid.getN(); col++) {
+        Cell cell = shapeGrid.get(line, col);
+        if (get(shape.getLine() - line, shape.getColumn() + col) == FILLED && cell == FILLED) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private void putInGrid(Shape shape) {
+    Grid shapeGrid = shape.getGrid();
+    for (int line = 0; line < shapeGrid.getM(); line++) {
+      for (int col = 0; col < shapeGrid.getN(); col++) {
+        Cell cell = shapeGrid.get(line, col);
+        set(shape.getLine() - line, shape.getColumn() + col, cell);
+      }
+    }
   }
 
   private void dropEverythingFrom(int i) {
@@ -77,13 +123,26 @@ public class Tetris extends Grid {
 
   }
 
+  public void setShape(Shape shape) {
+    this.shape = shape;
+  }
 
   public void print() {
     for (int line = 0; line < getM(); line++) {
       for (int col = 0; col < getN(); col++) {
+        if (isInShapeGrid(line, col)) {
+          Grid shapeGrid = shape.getGrid();
+          Cell cell = shapeGrid.get(line - shape.getLine(), col - shape.getColumn());
+          System.out.print(cell == FILLED ? SHAPE_STRING : STRING_MAP.get(get(line, col)));
+        }
         System.out.print(STRING_MAP.get(get(line, col)));
       }
       System.out.println();
     }
+  }
+
+  private boolean isInShapeGrid(int line, int col) {
+    return line >= shape.getLine() && line < shape.getLine() + shape.getM() &&
+      col >= shape.getColumn() && col < shape.getColumn() + shape.getN();
   }
 }

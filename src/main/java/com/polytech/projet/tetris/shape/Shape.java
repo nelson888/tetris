@@ -14,4 +14,11 @@ public interface Shape {
 
   int getM();
 
+  int getLine(); //le point en bas de la shape
+
+  int getColumn(); //le point a gauche de la shape
+
+  void setLine(int l);
+
+  void setColumn(int c);
 }
