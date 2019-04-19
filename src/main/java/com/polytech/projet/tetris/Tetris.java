@@ -67,7 +67,7 @@ public class Tetris extends Grid {
     }
 
     shape.setLine(shape.getLine() + 1); //descend la shape et voit si il y a collision
-    boolean collides = shapeCollides();
+    boolean collides = shapeNotColliding();
     shape.setLine(shape.getLine() - 1);
     return collides;
   }
@@ -78,7 +78,7 @@ public class Tetris extends Grid {
           case LEFT:
               if (shape.getColumn()>= 1){
                   shape.setColumn(shape.getColumn()-1);
-                  collides = shapeCollides();
+                  collides = shapeNotColliding();
                   shape.setColumn(shape.getColumn()+1);
               }
               else{
@@ -88,7 +88,7 @@ public class Tetris extends Grid {
           case RIGHT:
               if (shape.getColumn()+shape.getN()-2< getN()){
                   shape.setColumn(shape.getColumn()+1);
-                  collides = shapeCollides();
+                  collides = shapeNotColliding();
                   shape.setColumn(shape.getColumn()-1);
               }
               else{
@@ -102,7 +102,7 @@ public class Tetris extends Grid {
       return collides;
   }
 
-  private boolean shapeCollides() {
+  private boolean shapeNotColliding() {
     Grid shapeGrid = shape.getGrid();
     for (int line = 0; line < shapeGrid.getM(); line++) {
       for (int col = 0; col < shapeGrid.getN(); col++) {
