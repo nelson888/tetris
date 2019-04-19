@@ -1,10 +1,6 @@
 package com.polytech.projet.tetris;
 
 import com.polytech.projet.tetris.data.Command;
-import com.polytech.projet.tetris.shape.LShape;
-import com.polytech.projet.tetris.shape.ReversedLShape;
-import com.polytech.projet.tetris.shape.SShape;
-import com.polytech.projet.tetris.shape.TShape;
 
 import java.util.Scanner;
 import java.util.concurrent.Executor;
@@ -15,24 +11,21 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
     Tetris tetris = new Tetris();
-    tetris.setShape(new SShape());
-
 
     System.out.println("Bienvenue dans Tetris. Voici les commandes");
     System.out.println("\tQ pour bouger a gauche");
-    System.out.println("\ts pour bouger en bas");
+    System.out.println("\tS pour bouger une forme tout en bas");
     System.out.println("\tD pour bouger a droite");
     System.out.println("Apres chaque commande, appuyer sur entree pour qu'elle soit prise en compte");
     System.out.println();
 
     tetris.print();
 
-    AtomicReference<Command> directionReference = new AtomicReference<>(Command.DOWN);
+    AtomicReference<Command> directionReference = new AtomicReference<>(Command.IDLE);
     Executor executor = Executors.newSingleThreadExecutor();
     executor.execute(() -> {
       try (Scanner scanner = new Scanner(System.in)) {
-
-        while (true) {
+        while (!tetris.hasLost()) {
         switch (scanner.next().toUpperCase().charAt(0)) {
           case 'Q':
             directionReference.set(Command.LEFT);
@@ -49,11 +42,12 @@ public class Main {
           case 'E':
             directionReference.set(Command.ROTATE_RIGHT);
             break;
-        }}
+        }
+        }
       }
     });
-    while (true) {
-      directionReference.set(Command.DOWN);
+    while (!tetris.hasLost()) {
+      directionReference.set(Command.IDLE);
       Thread.sleep(1000L);
       System.out.println(directionReference.get());
       tetris.nextFrame(directionReference.get());
@@ -63,5 +57,6 @@ public class Main {
       System.out.println();
     }
 
+    System.out.println("You lost!!!");
   }
 }

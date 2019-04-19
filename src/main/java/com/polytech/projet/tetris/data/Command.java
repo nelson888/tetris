@@ -4,7 +4,7 @@ public enum  Command {
   LEFT {
     @Override
     public Direction toDirection() {
-      return Direction.RIGHT;
+      return Direction.LEFT;
     }
   },
   RIGHT {
@@ -13,7 +13,7 @@ public enum  Command {
       return Direction.RIGHT;
     }
   },
-  ROTATE_LEFT, ROTATE_RIGHT, DOWN;
+  ROTATE_LEFT, ROTATE_RIGHT, IDLE, DOWN;
 
   public Direction toDirection() {
     throw new RuntimeException("Cannot convert " + this + " to a direction");

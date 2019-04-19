@@ -1,8 +1,8 @@
 package com.polytech.projet.tetris;
 
-import static org.junit.Assert.assertEquals;
 import static com.polytech.projet.tetris.grid.Cell.FILLED;
 import static com.polytech.projet.tetris.grid.Cell.EMPTY;
+import static org.junit.Assert.*;
 
 import com.polytech.projet.tetris.data.Command;
 import com.polytech.projet.tetris.grid.Cell;
@@ -20,13 +20,14 @@ public class TetrisTest {
   private static final Cell[] FILLED_LINE;
 
   static {
-    FILLED_LINE = new Cell[10];
+    FILLED_LINE = new Cell[Tetris.WIDTH];
     Arrays.fill(FILLED_LINE, FILLED);
   }
 
   @Before
   public void init() {
     tetris = new Tetris();
+    tetris.setShape(null);
   }
 
   @Test
@@ -36,6 +37,7 @@ public class TetrisTest {
         assertEquals("Should be empty", EMPTY, tetris.get(line, col));
       }
     }
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -44,9 +46,24 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(line, col, FILLED);
     }
-    tetris.nextFrame(Command.DOWN);
+    tetris.nextFrame(Command.IDLE);
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", Cell.EMPTY, tetris.get(line, col));
+    }
+    assertFalse("Shouldn't have lost", tetris.hasLost());
+  }
+
+  @Test
+  public void almostAllLinesFilled() {
+    for (int line = 1; line < tetris.getM(); line++) {
+      tetris.setLine(line, FILLED_LINE);
+    }
+    tetris.nextFrame(Command.IDLE);
+tetris.print();
+    for (int line = 0; line < tetris.getM(); line++) {
+      for (int col = 0; col < tetris.getN(); col++) {
+        assertEquals("Should be empty", EMPTY, tetris.get(line, col));
+      }
     }
   }
 
@@ -62,11 +79,12 @@ public class TetrisTest {
       tetris.set(l, col, line[col]);
     }
 
-    tetris.nextFrame(Command.DOWN);
+    tetris.nextFrame(Command.IDLE);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l, col));
     }
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -82,20 +100,22 @@ public class TetrisTest {
     }
     tetris.setLine(l + 1, FILLED_LINE);
 
-    tetris.nextFrame(Command.DOWN);
+    tetris.nextFrame(Command.IDLE);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l + 1, col));
     }
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
   public void shapeFallTest() {
     Shape shape = new Square();
     tetris.setShape(shape);
-    tetris.nextFrame(Command.DOWN);
+    tetris.nextFrame(Command.IDLE);
     assertEquals("Should have went down", 1, shape.getLine());
     assertEquals("Shouldn't have moved", 0, shape.getColumn());
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -117,6 +137,7 @@ public class TetrisTest {
     tetris.nextFrame(Command.LEFT);
     assertEquals("Shouldn'thave moved",0,shape.getColumn());
     assertEquals("Shouldn'thave moved", 0,shape.getLine());
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -128,6 +149,7 @@ public class TetrisTest {
 
     assertEquals("Should've moved",tetris.getN()-shape.getN(),shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -139,6 +161,7 @@ public class TetrisTest {
 
     assertEquals("Shouldn't have moved", tetris.getN()-shape.getN(), shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
+    assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
@@ -148,7 +171,7 @@ public class TetrisTest {
     int column = 4;
     shape.setColumn(column);
     tetris.setShape(shape);
-    tetris.nextFrame(Command.DOWN);
+    tetris.nextFrame(Command.IDLE);
 
     assertEquals("Should have went down", tetris.getM() - 1, shape.getLine());
     assertEquals("Shouldn't have moved", column, shape.getColumn());
@@ -157,5 +180,20 @@ public class TetrisTest {
         assertEquals("Should have went down", tetris.get(shape.getLine() - line, shape.getColumn() + col), FILLED);
       }
     }
+    assertFalse("Shouldn't have lost", tetris.hasLost());
+  }
+
+  @Test
+  public void lostTest() {
+    tetris.setShape(new Square());
+    for (int line = 1; line < tetris.getM(); line++) {
+      for (int col = 0; col < tetris.getN() - 1; col++) { //not full line
+        tetris.set(line, col, FILLED);
+      }
+    }
+    tetris.nextFrame(Command.IDLE);
+
+    tetris.print();
+    assertTrue("Should have lost", tetris.hasLost());
   }
 }

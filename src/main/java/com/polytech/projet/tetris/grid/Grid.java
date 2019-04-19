@@ -37,6 +37,12 @@ public class Grid {
     }
   }
 
+  public void setSafe(int line, int col, Cell value) {
+    if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
+      this.grid[line][col] = value;
+    }
+  }
+
   public Cell[] getLine(int l) {
     if (l < 0 || l >= getM()) {
       throw new IndexOutOfBoundsException("line " + l + " doesn't exist");
@@ -60,6 +66,14 @@ public class Grid {
 
   public int getN() {
     return n;
+  }
+
+  public Grid copy() {
+    Grid grid = new Grid(getM(), getN());
+    for (int line = 0; line < getM(); line++) {
+      grid.setLine(line, Arrays.copyOf(getLine(line), getN()));
+    }
+    return grid;
   }
 
   @Override
