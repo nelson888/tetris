@@ -91,11 +91,21 @@ public class TetrisTest {
   public void shapeFallTest() {
     Shape shape = new Square();
     tetris.setShape(shape);
-    tetris.nextFrame(null);
+    tetris.nextFrame(Direction.DOWN);
     assertEquals("Should have went down", 1, shape.getLine());
     assertEquals("Shouldn't have moved", 0, shape.getColumn());
   }
 
+  @Test
+  public void shapeCanGoLeftTest(){
+    Shape shape = new Square();
+    int column = 1;
+    shape.setColumn(1);
+    tetris.setShape(shape);
+    tetris.nextFrame(Direction.LEFT);
+    assertEquals("Should've went left",0,shape.getColumn());
+    assertEquals("Shouldn'thave moved", 0,shape.getLine());
+  }
 
   @Test
   public void shapeInGridTest() { //when shape cannot fall, it is stored in grid
@@ -104,7 +114,7 @@ public class TetrisTest {
     int column = 4;
     shape.setColumn(column);
     tetris.setShape(shape);
-    tetris.nextFrame(null);
+    tetris.nextFrame(Direction.DOWN);
 
     assertEquals("Should have went down", tetris.getM() - 1, shape.getLine());
     assertEquals("Shouldn't have moved", column, shape.getColumn());

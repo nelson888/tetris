@@ -33,17 +33,28 @@ public class Tetris extends Grid {
   }
 
   public void nextFrame(Direction dir) {
-      for(int i = getM()-1; i>=0; i--){
-          if(isLineFilled(i)){
-              dropEverythingFrom(i);
-          }
-      }
-      if (shape != null) {
-        if (canFall(shape)) {
-          shape.setLine(shape.getLine() + 1);
-        } else {
-          putInGrid(shape);
-        }
+      switch (dir){
+          case DOWN:
+              for(int i = getM()-1; i>=0; i--){
+                  if(isLineFilled(i)){
+                      dropEverythingFrom(i);
+                  }
+              }
+              if (shape != null) {
+                  if (canFall(shape)) {
+                      shape.setLine(shape.getLine() + 1);
+                  } else {
+                      putInGrid(shape);
+                  }
+              }
+          case LEFT:
+              if (canMoveLeftRight(shape, dir)){
+                    shape.setColumn(shape.getColumn()-1);
+              }
+          case RIGHT:
+              if (canMoveLeftRight(shape, dir)){
+                  shape.setColumn(shape.getColumn()+1);
+              }
       }
   }
 
@@ -58,7 +69,7 @@ public class Tetris extends Grid {
     return collides;
   }
 
-  private boolean canMoveLeftRight(Direction dir){
+  private boolean canMoveLeftRight(Shape shape, Direction dir){
       boolean collides;
       switch (dir){
           case LEFT:
