@@ -15,11 +15,10 @@ public class Tetris extends Grid {
   private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
   private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
   private static final String ANSI_RESET = "\u001B[0m";
-
   private static final String STRING = "  ";
   private static final Map<Cell, String> STRING_MAP;
-
   private static final String SHAPE_STRING = ANSI_BLUE_BACKGROUND + STRING + ANSI_RESET;
+
   static {
     Map<Cell, String> map = new HashMap<>();
     map.put(Cell.EMPTY, STRING);
@@ -159,20 +158,41 @@ public class Tetris extends Grid {
 
   public void print() {
     for (int line = 0; line < getM(); line++) {
+      System.out.print(line + "\t|");
       for (int col = 0; col < getN(); col++) {
         if (isInShapeGrid(line, col)) {
           Grid shapeGrid = shape.getGrid();
-          Cell cell = shapeGrid.get(line - shape.getLine(), col - shape.getColumn());
+          int l = line - shape.getLine() + 1;
+          int c = col - shape.getColumn();
+          Cell cell = shapeGrid.getSafe(l, c);
           System.out.print(cell == FILLED ? SHAPE_STRING : STRING_MAP.get(get(line, col)));
+        } else {
+          System.out.print(STRING_MAP.get(get(line, col)));
         }
-        System.out.print(STRING_MAP.get(get(line, col)));
       }
       System.out.println();
+
+    }
+    System.out.print(" \t ");
+    for (int i = 0; i < getN(); i++) {
+      System.out.print("__");
+    }
+    System.out.println();
+    System.out.print(" \t ");
+    for (int i = 0; i < getN(); i++) {
+      String n = String.valueOf(i);
+      if (n.length() == 1) {
+        n += " ";
+      }
+      System.out.print(n);
     }
   }
 
   private boolean isInShapeGrid(int line, int col) {
-    return line >= shape.getLine() && line < shape.getLine() + shape.getM() &&
-      col >= shape.getColumn() && col < shape.getColumn() + shape.getN();
+    int left = shape.getColumn();
+    int right = shape.getColumn() + shape.getN() - 1;
+    int up = shape.getLine() - shape.getM() + 1;
+    int down = shape.getLine();
+    return line <= down && line >= up && col >= left && col <= right;
   }
 }

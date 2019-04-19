@@ -9,9 +9,18 @@ import com.polytech.projet.tetris.shape.Square;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class TetrisTest {
 
   private Tetris tetris;
+
+  private static final Cell[] FILLED_LINE;
+
+  static {
+    FILLED_LINE = new Cell[24];
+    Arrays.fill(FILLED_LINE, FILLED);
+  }
 
   @Before
   public void init() {
@@ -33,7 +42,7 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(line, col, FILLED);
     }
-    tetris.nextFrame();
+    tetris.nextFrame(null);
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", Cell.EMPTY, tetris.get(line, col));
     }
@@ -51,7 +60,7 @@ public class TetrisTest {
       tetris.set(l, col, line[col]);
     }
 
-    tetris.nextFrame();
+    tetris.nextFrame(null);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l, col));
@@ -68,10 +77,10 @@ public class TetrisTest {
     int l =  tetris.getM() - 2; //avant derniere ligne
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(l, col, line[col]);
-      tetris.set(l + 1, col, FILLED);
     }
+    tetris.setLine(l + 1, FILLED_LINE);
 
-    tetris.nextFrame();
+    tetris.nextFrame(null);
 
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l + 1, col));
@@ -82,7 +91,7 @@ public class TetrisTest {
   public void shapeFallTest() {
     Shape shape = new Square();
     tetris.setShape(shape);
-    tetris.nextFrame();
+    tetris.nextFrame(null);
     assertEquals("Should have went down", 1, shape.getLine());
     assertEquals("Shouldn't have moved", 0, shape.getColumn());
   }
@@ -92,14 +101,13 @@ public class TetrisTest {
   public void shapeInGridTest() { //when shape cannot fall, it is stored in grid
     Shape shape = new Square();
     shape.setLine(tetris.getM() - 1);
-    shape.setColumn(4);
+    int column = 4;
+    shape.setColumn(column);
     tetris.setShape(shape);
-    tetris.print();
-    tetris.nextFrame();
-//    tetris.print();
+    tetris.nextFrame(null);
 
     assertEquals("Should have went down", tetris.getM() - 1, shape.getLine());
-    assertEquals("Shouldn't have moved", 4, shape.getColumn());
+    assertEquals("Shouldn't have moved", column, shape.getColumn());
     for (int line = 0; line < shape.getM(); line++) {
       for (int col = 0; col < shape.getN(); col++) {
         assertEquals("Should have went down", tetris.get(shape.getLine() - line, shape.getColumn() + col), FILLED);

@@ -21,6 +21,14 @@ public class Grid {
     return grid[line][col];
   }
 
+
+  public Cell getSafe(int line, int col) {
+    if (line < 0 || line >= getM() || col < 0 || col >= getN()) {
+      return Cell.EMPTY;
+    }
+    return grid[line][col];
+  }
+
   public void set(int line, int col, Cell value) {
     if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
       this.grid[line][col] = value;
