@@ -28,23 +28,20 @@ public class Tetris extends Grid {
   }
 
   public void nextFrame() {
-      for(int i = getN()-1; i>=0; i--){
+      for(int i = getM()-1; i>=0; i--){
           if(isLineFilled(i)){
               dropEverythingFrom(i);
           }
-          else if (isLinePartiallyFilled(i)){
-              for (int j = i+1; j < getM(); j++) {
-                  if (isLineEmpty(j)){
 
-                  }
-              }
-          }
       }
   }
 
   private void dropEverythingFrom(int i) {
       for (int j = i-1; j>=0; j--) {
-
+          setLine(j+1, getLine(j));
+      }
+      for (int j = 0; j < getN(); j++) {
+          set(0,j,EMPTY);
       }
   }
 

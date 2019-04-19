@@ -39,7 +39,7 @@ public class TetrisTest {
 
   @Test
   public void lineNotEntirelyFilledTest() {
-    Cell[] line = new Cell[tetris.getM()];
+    Cell[] line = new Cell[tetris.getN()];
     for (int col = 0; col < tetris.getN(); col++) {
       line[col] = col > 0 ? FILLED : EMPTY; //not entirely filled line
     }
@@ -58,7 +58,7 @@ public class TetrisTest {
 
   @Test
   public void lineFilledUnderLineNotEntirelyFilled() {
-    Cell[] line = new Cell[tetris.getM()];
+    Cell[] line = new Cell[tetris.getN()];
     for (int col = 0; col < tetris.getN(); col++) {
       line[col] = col > 0 ? FILLED : EMPTY; //not entirely filled line
     }
@@ -66,6 +66,7 @@ public class TetrisTest {
     int l =  tetris.getM() - 2; //avant derniere ligne
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(l, col, line[col]);
+      tetris.set(l + 1, col, FILLED);
     }
 
     tetris.nextFrame();
