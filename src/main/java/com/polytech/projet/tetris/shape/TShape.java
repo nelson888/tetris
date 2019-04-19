@@ -7,7 +7,7 @@ import com.polytech.projet.tetris.grid.Grid;
  *   * *
  *   *
  */
-public class TShape extends RotatableShape {
+public class TShape extends AsymetricShape {
 
   private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (line, col) -> col == 0 || line == 1);
   private static final Grid ROTATED_1 = newShapeGrid(3, 2, (line, col) -> line == 0 || col == 1);

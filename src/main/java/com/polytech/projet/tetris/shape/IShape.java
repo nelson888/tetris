@@ -1,6 +1,5 @@
 package com.polytech.projet.tetris.shape;
 
-import com.polytech.projet.tetris.data.Direction;
 import com.polytech.projet.tetris.grid.Grid;
 
 /**
@@ -9,22 +8,21 @@ import com.polytech.projet.tetris.grid.Grid;
  *   *
  *   *
  */
-public class IShape extends AbstractShape {
+public class IShape extends SymetricShape {
 
   private static final int LENGTH = 4;
-  private static final Grid INITIAL_GRID = newShapeGrid(1, LENGTH, (i, j) -> true);
-  private static final Grid ROTATED_GRID = newShapeGrid(LENGTH, 1, (i, j) -> true);
+  private static final Grid INITIAL_GRID = newShapeGrid(1, LENGTH, (line, col) -> true);
+  private static final Grid ROTATED_GRID = newShapeGrid(LENGTH, 1, (line, col) -> true);
+
+  private static final Grid[] GRIDS = new Grid[] {INITIAL_GRID, ROTATED_GRID};
 
   public IShape() {
     super(INITIAL_GRID);
   }
 
-  public void rotate(Direction direction) {
-    if (grid == INITIAL_GRID) {
-      grid = ROTATED_GRID;
-    } else {
-      grid = INITIAL_GRID;
-    }
-  }
 
+  @Override
+  protected Grid getGridAt(int i) {
+    return GRIDS[i];
+  }
 }

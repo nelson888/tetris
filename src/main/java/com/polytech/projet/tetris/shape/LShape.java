@@ -7,12 +7,12 @@ import com.polytech.projet.tetris.grid.Grid;
  *   *
  *   * *
  */
-public class LShape extends RotatableShape {
+public class LShape extends AsymetricShape {
 
-  private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (i, j) -> i == 0 || j == 2);
-  private static final Grid ROTATED_GRID_1 = newShapeGrid(3, 2, (i, j) -> j == 0 || i == 0);
-  private static final Grid ROTATED_GRID_2 = newShapeGrid(2, 3, (i, j) -> j == 1 || i == 0);
-  private static final Grid ROTATED_GRID_3 = newShapeGrid(3, 2, (i, j) -> j == 0 || i == 2);
+  private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (line, col) -> col == 0 || line == 2);
+  private static final Grid ROTATED_GRID_1 = newShapeGrid(3, 2, (line, col) -> line == 0 || col == 0);
+  private static final Grid ROTATED_GRID_2 = newShapeGrid(2, 3, (line, col) -> col == 1 || line == 0);
+  private static final Grid ROTATED_GRID_3 = newShapeGrid(3, 2, (line, col) -> line == 1 || col == 2);
 
   private static final Grid[] GRIDS = new Grid[] {INITIAL_GRID, ROTATED_GRID_1, ROTATED_GRID_2, ROTATED_GRID_3};
 

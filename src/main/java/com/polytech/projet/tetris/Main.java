@@ -1,6 +1,9 @@
 package com.polytech.projet.tetris;
 
 import com.polytech.projet.tetris.data.Command;
+import com.polytech.projet.tetris.shape.LShape;
+import com.polytech.projet.tetris.shape.ReversedLShape;
+import com.polytech.projet.tetris.shape.SShape;
 import com.polytech.projet.tetris.shape.TShape;
 
 import java.util.Scanner;
@@ -12,7 +15,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
     Tetris tetris = new Tetris();
-    tetris.setShape(new TShape());
+    tetris.setShape(new SShape());
 
 
     System.out.println("Bienvenue dans Tetris. Voici les commandes");

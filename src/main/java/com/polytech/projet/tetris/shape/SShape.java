@@ -8,23 +8,20 @@ import com.polytech.projet.tetris.grid.Grid;
  *   * *
  *     *
  */
-public class SShape extends AbstractShape {
+public class SShape extends SymetricShape {
 
-  private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (i, j) -> i == 1 && j == 0 || i == 0 && j == 2);
-  private static final Grid ROTATED_GRID = newShapeGrid(3, 2, (i, j) -> j == 1 && i == 0 || j == 0 && i == 2);
+  private static final Grid INITIAL_GRID = newShapeGrid(2, 3, (line, col) -> col == 0 && line != 2 || col == 1 && line != 0);
+  private static final Grid ROTATED_GRID = newShapeGrid(3, 2, (line, col) -> line == 1 && col != 2 || line == 0 && col != 0);
 
+  private static final Grid[] GRIDS = new Grid[] {INITIAL_GRID, ROTATED_GRID};
 
   public SShape() {
     super(INITIAL_GRID);
   }
 
-  @Override
-  public void rotate(Direction direction) {
-    if (grid == INITIAL_GRID) {
-      grid = ROTATED_GRID;
-    } else {
-      grid = INITIAL_GRID;
-    }
-  }
 
+  @Override
+  protected Grid getGridAt(int i) {
+    return GRIDS[i];
+  }
 }

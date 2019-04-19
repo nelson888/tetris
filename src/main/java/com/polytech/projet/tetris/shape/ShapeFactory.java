@@ -1,5 +1,6 @@
 package com.polytech.projet.tetris.shape;
 
+import com.polytech.projet.tetris.Tetris;
 import com.polytech.projet.tetris.data.Direction;
 
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class ShapeFactory {
     for (int i = rotateRandom.nextInt(3); i >=0; i--) {
       shape.rotate(Direction.RIGHT);
     }
+    shape.setColumn(Tetris.WIDTH / 2);
     return shape;
   }
 

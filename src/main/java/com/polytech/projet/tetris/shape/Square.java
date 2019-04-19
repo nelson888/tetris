@@ -10,7 +10,7 @@ import com.polytech.projet.tetris.grid.Grid;
 public class Square extends AbstractShape {
 
   private static final int SIZE = 2;
-  private static final Grid SQUARE_GRID = newShapeGrid(SIZE, SIZE, (i, j) -> true);
+  private static final Grid SQUARE_GRID = newShapeGrid(SIZE, SIZE, (line, col) -> true);
 
   public Square() {
     super(SQUARE_GRID);
