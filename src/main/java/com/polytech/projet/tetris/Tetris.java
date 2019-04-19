@@ -47,14 +47,17 @@ public class Tetris extends Grid {
                       putInGrid(shape);
                   }
               }
+              break;
           case LEFT:
               if (canMoveLeftRight(shape, dir)){
                     shape.setColumn(shape.getColumn()-1);
               }
+              break;
           case RIGHT:
               if (canMoveLeftRight(shape, dir)){
                   shape.setColumn(shape.getColumn()+1);
               }
+              break;
       }
   }
 
@@ -79,7 +82,7 @@ public class Tetris extends Grid {
                   shape.setColumn(shape.getColumn()+1);
               }
               else{
-                  collides = true;
+                  return false;
               }
               break;
           case RIGHT:
@@ -104,7 +107,7 @@ public class Tetris extends Grid {
     for (int line = 0; line < shapeGrid.getM(); line++) {
       for (int col = 0; col < shapeGrid.getN(); col++) {
         Cell cell = shapeGrid.get(line, col);
-        if (get(shape.getLine() - line, shape.getColumn() + col) == FILLED && cell == FILLED) {
+        if (getSafe(shape.getLine() - line, shape.getColumn() + col) == FILLED && cell == FILLED) {
           return false;
         }
       }
