@@ -29,7 +29,7 @@ public class Tetris extends Grid {
   private Shape shape;
 
   public Tetris() {
-    super(10, 24);
+    super(24, 10);
   }
 
   public void nextFrame(Direction dir) {
@@ -86,13 +86,13 @@ public class Tetris extends Grid {
               }
               break;
           case RIGHT:
-              if (shape.getColumn()+shape.getN()-2< getN()){
+              if (shape.getColumn()+shape.getN()< getN()){
                   shape.setColumn(shape.getColumn()+1);
                   collides = shapeNotColliding();
                   shape.setColumn(shape.getColumn()-1);
               }
               else{
-                  collides = true;
+                  return false;
               }
               break;
           default:

@@ -18,7 +18,7 @@ public class TetrisTest {
   private static final Cell[] FILLED_LINE;
 
   static {
-    FILLED_LINE = new Cell[24];
+    FILLED_LINE = new Cell[10];
     Arrays.fill(FILLED_LINE, FILLED);
   }
 
@@ -115,6 +115,29 @@ public class TetrisTest {
     tetris.nextFrame(Direction.LEFT);
     assertEquals("Shouldn'thave moved",0,shape.getColumn());
     assertEquals("Shouldn'thave moved", 0,shape.getLine());
+  }
+
+  @Test
+  public void shapeCanGoRightTest(){
+    Shape shape = new Square();
+    shape.setColumn(tetris.getN()-(1+shape.getN()));
+    tetris.setShape(shape);
+    tetris.nextFrame(Direction.RIGHT);
+
+    assertEquals("Should've moved",tetris.getN()-shape.getN(),shape.getColumn());
+    assertEquals("Shouldn't have moved", 0, shape.getLine());
+  }
+
+  @Test
+  public void shapeCannotGoRightTest(){
+    Shape shape = new Square();
+    shape.setColumn(tetris.getN()-shape.getN());
+    tetris.setShape(shape);
+    tetris.nextFrame(Direction.RIGHT);
+
+    assertEquals("Shouldn't have moved", tetris.getN()-shape.getN(), shape.getColumn());
+    assertEquals("Shouldn't have moved", 0, shape.getLine());
+
   }
 
   @Test
