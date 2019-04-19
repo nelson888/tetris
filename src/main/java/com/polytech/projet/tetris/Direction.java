@@ -21,6 +21,12 @@ public enum Direction {
     public Direction opposite() {
       return LEFT;
     }
+  }, DOWN {
+    @Override
+    public int toInt() { return 0; }
+
+    @Override
+    public Direction opposite() { return null; }
   };
 
 
