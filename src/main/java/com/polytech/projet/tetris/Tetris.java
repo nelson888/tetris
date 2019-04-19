@@ -33,7 +33,7 @@ public class Tetris extends Grid {
     super(10, 24);
   }
 
-  public void nextFrame() {
+  public void nextFrame(Direction dir) {
       for(int i = getM()-1; i>=0; i--){
           if(isLineFilled(i)){
               dropEverythingFrom(i);
@@ -50,13 +50,43 @@ public class Tetris extends Grid {
 
   private boolean canFall(Shape shape) {
     if (shape.getLine() == getM()- 1) {
-      return false;
+        return false;
     }
 
     shape.setLine(shape.getLine() + 1); //descend la shape et voit si il y a collision
     boolean collides = shapeCollides();
     shape.setLine(shape.getLine() - 1);
     return collides;
+  }
+
+  private boolean canMoveLeftRight(Direction dir){
+      boolean collides;
+      switch (dir){
+          case LEFT:
+              if (shape.getColumn()>= 1){
+                  shape.setColumn(shape.getColumn()-1);
+                  collides = shapeCollides();
+                  shape.setColumn(shape.getColumn()+1);
+              }
+              else{
+                  collides = true;
+              }
+              break;
+          case RIGHT:
+              if (shape.getColumn()+shape.getN()-2< getN()){
+                  shape.setColumn(shape.getColumn()+1);
+                  collides = shapeCollides();
+                  shape.setColumn(shape.getColumn()-1);
+              }
+              else{
+                  collides = true;
+              }
+              break;
+          default:
+              collides = false;
+              break;
+      }
+      return collides;
   }
 
   private boolean shapeCollides() {
