@@ -15,14 +15,14 @@ import java.util.Arrays;
 
 public class TetrisTest {
 
-  private Tetris tetris;
-
   private static final Cell[] FILLED_LINE;
 
   static {
     FILLED_LINE = new Cell[Tetris.WIDTH];
     Arrays.fill(FILLED_LINE, FILLED);
   }
+
+  private Tetris tetris;
 
   @Before
   public void init() {
@@ -59,7 +59,7 @@ public class TetrisTest {
       tetris.setLine(line, FILLED_LINE);
     }
     tetris.nextFrame(Command.IDLE);
-tetris.print();
+
     for (int line = 0; line < tetris.getM(); line++) {
       for (int col = 0; col < tetris.getN(); col++) {
         assertEquals("Should be empty", EMPTY, tetris.get(line, col));
@@ -94,7 +94,7 @@ tetris.print();
       line[col] = col > 0 ? FILLED : EMPTY; //not entirely filled line
     }
 
-    int l =  tetris.getM() - 2; //avant derniere ligne
+    int l = tetris.getM() - 2; //avant derniere ligne
     for (int col = 0; col < tetris.getN(); col++) {
       tetris.set(l, col, line[col]);
     }
@@ -119,48 +119,48 @@ tetris.print();
   }
 
   @Test
-  public void shapeCanGoLeftTest(){
+  public void shapeCanGoLeftTest() {
     Shape shape = new Square();
     int column = 1;
     shape.setColumn(column);
     tetris.setShape(shape);
     tetris.nextFrame(Command.LEFT);
-    assertEquals("Should've went left",column - 1,shape.getColumn());
-    assertEquals("Shouldn'thave moved", 0,shape.getLine());
+    assertEquals("Should've went left", column - 1, shape.getColumn());
+    assertEquals("Shouldn'thave moved", 0, shape.getLine());
   }
 
   @Test
-  public void shapeCannotGoLeftTest(){
+  public void shapeCannotGoLeftTest() {
     Shape shape = new Square();
     shape.setColumn(0);
     tetris.setShape(shape);
     tetris.nextFrame(Command.LEFT);
-    assertEquals("Shouldn'thave moved",0,shape.getColumn());
-    assertEquals("Shouldn'thave moved", 0,shape.getLine());
+    assertEquals("Shouldn'thave moved", 0, shape.getColumn());
+    assertEquals("Should have fell", 1, shape.getLine());
     assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
-  public void shapeCanGoRightTest(){
+  public void shapeCanGoRightTest() {
     Shape shape = new Square();
-    shape.setColumn(tetris.getN()-(1+shape.getN()));
+    shape.setColumn(tetris.getN() - (1 + shape.getN()));
     tetris.setShape(shape);
     tetris.nextFrame(Command.RIGHT);
 
-    assertEquals("Should've moved",tetris.getN()-shape.getN(),shape.getColumn());
+    assertEquals("Should've moved", tetris.getN() - shape.getN(), shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
     assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
   @Test
-  public void shapeCannotGoRightTest(){
+  public void shapeCannotGoRightTest() {
     Shape shape = new Square();
-    shape.setColumn(tetris.getN()-shape.getN());
+    shape.setColumn(tetris.getN() - shape.getN());
     tetris.setShape(shape);
     tetris.nextFrame(Command.RIGHT);
 
-    assertEquals("Shouldn't have moved", tetris.getN()-shape.getN(), shape.getColumn());
-    assertEquals("Shouldn't have moved", 0, shape.getLine());
+    assertEquals("Shouldn't have moved", tetris.getN() - shape.getN(), shape.getColumn());
+    assertEquals("Should have fell", 1, shape.getLine());
     assertFalse("Shouldn't have lost", tetris.hasLost());
   }
 
@@ -193,7 +193,6 @@ tetris.print();
     }
     tetris.nextFrame(Command.IDLE);
 
-    tetris.print();
     assertTrue("Should have lost", tetris.hasLost());
   }
 }

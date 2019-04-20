@@ -24,6 +24,7 @@ public enum Direction {
   };
 
   public abstract int toInt();
+
   public abstract Direction opposite();
 
 }

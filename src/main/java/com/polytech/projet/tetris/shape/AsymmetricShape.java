@@ -2,9 +2,9 @@ package com.polytech.projet.tetris.shape;
 
 import com.polytech.projet.tetris.grid.Grid;
 
-public abstract class AsymetricShape extends RotatableShape {
+public abstract class AsymmetricShape extends RotatableShape {
 
-  public AsymetricShape(Grid grid) {
+  public AsymmetricShape(Grid grid) {
     super(grid, 4);
   }
 

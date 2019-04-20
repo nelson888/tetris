@@ -14,6 +14,7 @@ public enum Cell {
     }
   },
   SHAPE { //for printing
+
     @Override
     public String consoleString() {
       return ANSI_BLUE_BACKGROUND + STRING + ANSI_RESET;

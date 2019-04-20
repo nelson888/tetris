@@ -5,8 +5,6 @@ import com.polytech.projet.tetris.grid.Grid;
 
 public abstract class RotatableShape extends AbstractShape {
 
-  private static final int POSSIBLE_ROTATIONS = 4;
-
   private final int possibleRotations;
   private int gridIndex;
 

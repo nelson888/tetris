@@ -4,8 +4,8 @@ import com.polytech.projet.tetris.data.Direction;
 import com.polytech.projet.tetris.grid.Grid;
 
 /**
- *   * *
- *   * *
+ * * *
+ * * *
  */
 public class Square extends AbstractShape {
 

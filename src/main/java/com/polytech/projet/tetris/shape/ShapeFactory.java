@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * Factory that creates random shapes
+ */
 public class ShapeFactory {
 
   private static final Map<Integer, Supplier<Shape>> SHAPE_SUPPLIER_MAP;
@@ -34,7 +37,7 @@ public class ShapeFactory {
 
   public Shape createRandomShape() {
     Shape shape = SHAPE_SUPPLIER_MAP.get(shapeRandom.nextInt(NB_SHAPES)).get();
-    for (int i = rotateRandom.nextInt(3); i >=0; i--) {
+    for (int i = rotateRandom.nextInt(3); i >= 0; i--) {
       shape.rotate(Direction.RIGHT);
     }
     shape.setColumn(Tetris.WIDTH / 2);

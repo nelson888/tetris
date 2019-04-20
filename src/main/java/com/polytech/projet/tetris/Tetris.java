@@ -29,58 +29,73 @@ public class Tetris extends Grid {
 
   public void nextFrame(Command command) {
     removeFilledLines();
-      switch (command) {
-          case IDLE:
-              if (shape != null) {
-                  if (canFall(shape)) {
-                      shape.setLine(shape.getLine() + 1);
-                  } else {
-                      putInGrid(shape);
-                    lost = lost || shape.getLine() - shape.getM() < 0;
-                    shape = shapeFactory.createRandomShape();
-                  }
-              }
-              break;
-          case LEFT:
-              if (canMoveLeftRight(shape, command.toDirection())){
-                    shape.setColumn(shape.getColumn()-1);
-              }
-              break;
-          case RIGHT:
-              if (canMoveLeftRight(shape, command.toDirection())){
-                  shape.setColumn(shape.getColumn()+1);
-              }
-              break;
-        case ROTATE_LEFT:
-          if (canRotate(shape, Direction.LEFT)) {
-            shape.rotate(Direction.LEFT);
-          }
-          break;
-        case ROTATE_RIGHT:
-          if (canRotate(shape, Direction.RIGHT)) {
-            shape.rotate(Direction.RIGHT);
-          }
-          break;
-        case DOWN:
-          Shape shape = this.shape;
-          while (this.shape == shape) { //while there isn't a new shape created
-            nextFrame(Command.IDLE);
-          }
-          break;
+    switch (command) {
+      case IDLE:
+        shapeDown();
+        break;
+      case LEFT:
+        if (canMoveLeftRight(shape, command.toDirection())) {
+          shape.setColumn(shape.getColumn() - 1);
+        } else {
+          shapeDown();
+        }
+        break;
+      case RIGHT:
+        if (canMoveLeftRight(shape, command.toDirection())) {
+          shape.setColumn(shape.getColumn() + 1);
+        } else {
+          shapeDown();
+        }
+        break;
+      case ROTATE_LEFT:
+        if (canRotate(shape, Direction.LEFT)) {
+          shape.rotate(Direction.LEFT);
+        } else {
+          shapeDown();
+        }
+        break;
+      case ROTATE_RIGHT:
+        if (canRotate(shape, Direction.RIGHT)) {
+          shape.rotate(Direction.RIGHT);
+        } else {
+          shapeDown();
+        }
+        break;
+      case FAST_DOWN:
+        Shape shape = this.shape;
+        while (this.shape == shape) { //while there isn't a new shape created
+          nextFrame(Command.IDLE);
+        }
+        break;
+    }
+  }
+
+  private void shapeDown() {
+    if (shape != null) {
+      if (canFall(shape)) {
+        shape.setLine(shape.getLine() + 1);
+      } else {
+        putInGrid(shape);
+        lost = lost || shape.getLine() - shape.getM() < 0;
+        if (!lost) {
+          shape = shapeFactory.createRandomShape();
+        }
       }
+    }
   }
 
   private void removeFilledLines() {
-    for(int i = getM()-1; i>=0; i--){
-      if(isLineFilled(i)){
+    for (int i = getM() - 1; i >= 0; i--) {
+      if (isLineFilled(i)) {
         dropEverythingFrom(i);
         i++; //to recheck for fullness
       }
     }
   }
+
   private boolean canFall(Shape shape) {
-    if (shape.getLine() == getM()- 1) {
-        return false;
+    if (shape.getLine() == getM() - 1) {
+      return false;
     }
     shape.setLine(shape.getLine() + 1); //descend la shape et voit si il y a collision
     boolean collides = shapeNotColliding();
@@ -88,25 +103,25 @@ public class Tetris extends Grid {
     return collides;
   }
 
-  private boolean canMoveLeftRight(Shape shape, Direction dir){
-      boolean canMove = false;
-      switch (dir){
-          case LEFT:
-              if (shape.getColumn()>= 1){
-                  shape.setColumn(shape.getColumn()-1);
-                  canMove = shapeNotColliding();
-                  shape.setColumn(shape.getColumn()+1);
-              }
-              break;
-          case RIGHT:
-              if (shape.getColumn()+shape.getN()< getN()){
-                  shape.setColumn(shape.getColumn()+1);
-                  canMove = shapeNotColliding();
-                  shape.setColumn(shape.getColumn()-1);
-              }
-              break;
-      }
-      return canMove;
+  private boolean canMoveLeftRight(Shape shape, Direction dir) {
+    boolean canMove = false;
+    switch (dir) {
+      case LEFT:
+        if (shape.getColumn() >= 1) {
+          shape.setColumn(shape.getColumn() - 1);
+          canMove = shapeNotColliding();
+          shape.setColumn(shape.getColumn() + 1);
+        }
+        break;
+      case RIGHT:
+        if (shape.getColumn() + shape.getN() < getN()) {
+          shape.setColumn(shape.getColumn() + 1);
+          canMove = shapeNotColliding();
+          shape.setColumn(shape.getColumn() - 1);
+        }
+        break;
+    }
+    return canMove;
   }
 
   private boolean canRotate(Shape shape, Direction direction) {
@@ -121,7 +136,7 @@ public class Tetris extends Grid {
     for (int line = 0; line < shapeGrid.getM(); line++) {
       for (int col = 0; col < shapeGrid.getN(); col++) {
         Cell cell = shapeGrid.get(line, col);
-        if (cell == FILLED && getSafe(shape.getLine() - line, shape.getColumn() + col) == FILLED) {
+        if (cell == FILLED && getSafely(shape.getLine() - line, shape.getColumn() + col) == FILLED) {
           return false;
         }
       }
@@ -134,18 +149,18 @@ public class Tetris extends Grid {
     for (int line = 0; line < shapeGrid.getM(); line++) {
       for (int col = 0; col < shapeGrid.getN(); col++) {
         Cell cell = shapeGrid.get(line, col);
-        setSafe(shape.getLine() - line, shape.getColumn() + col, cell);
+        setSafely(shape.getLine() - line, shape.getColumn() + col, cell);
       }
     }
   }
 
   private void dropEverythingFrom(int i) {
-      for (int j = i-1; j>=0; j--) {
-          setLine(j+1, getLine(j));
-      }
-      for (int j = 0; j < getN(); j++) {
-          set(0,j,EMPTY);
-      }
+    for (int j = i - 1; j >= 0; j--) {
+      setLine(j + 1, getLine(j));
+    }
+    for (int j = 0; j < getN(); j++) {
+      set(0, j, EMPTY);
+    }
   }
 
   private boolean isLineFilled(int i) {
@@ -169,7 +184,7 @@ public class Tetris extends Grid {
         for (int col = 0; col < shapeGrid.getN(); col++) {
           Cell cell = shapeGrid.get(line, col);
           if (cell == FILLED) {
-            printGrid.setSafe(shape.getLine() - line, shape.getColumn() + col, SHAPE);
+            printGrid.setSafely(shape.getLine() - line, shape.getColumn() + col, SHAPE);
           }
         }
       }
@@ -196,6 +211,7 @@ public class Tetris extends Grid {
       }
       System.out.print(n);
     }
+    System.out.println();
   }
 
   public boolean hasLost() {

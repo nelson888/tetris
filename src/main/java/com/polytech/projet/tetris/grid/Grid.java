@@ -21,30 +21,36 @@ public class Grid {
     return grid[line][col];
   }
 
-
-  public Cell getSafe(int line, int col) {
-    if (line < 0 || line >= getM() || col < 0 || col >= getN()) {
+  public Cell getSafely(int line, int col) {
+    if (isOutOfBounds(line, col)) {
       return Cell.EMPTY;
     }
     return grid[line][col];
   }
 
+  private boolean isOutOfBounds(int line, int col) {
+    return line < 0 || line >= getM() || col < 0 || col >= getN();
+  }
+
   public void set(int line, int col, Cell value) {
-    if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
-      this.grid[line][col] = value;
-    } else {
+    if (isOutOfBounds(line, col)) {
       throw new IndexOutOfBoundsException(String.format("Index in out (%d, %d) of bound", line, col));
+    }
+    this.grid[line][col] = value;
+  }
+
+  public void setSafely(int line, int col, Cell value) {
+    if (!isOutOfBounds(line, col)) {
+      this.grid[line][col] = value;
     }
   }
 
-  public void setSafe(int line, int col, Cell value) {
-    if (line>=0 && line<this.grid.length && col>=0 && col<this.grid[0].length){
-      this.grid[line][col] = value;
-    }
+  private boolean isLineOutOfBounds(int l) {
+    return l < 0 || l >= getM();
   }
 
   public Cell[] getLine(int l) {
-    if (l < 0 || l >= getM()) {
+    if (isLineOutOfBounds(l)) {
       throw new IndexOutOfBoundsException("line " + l + " doesn't exist");
     }
     return grid[l];
@@ -54,7 +60,7 @@ public class Grid {
     if (cells.length != getN()) {
       throw new IllegalArgumentException("the line hasn't the right number of elements");
     }
-    if (l < 0 || l >= getM()) {
+    if (isLineOutOfBounds(l)) {
       throw new IndexOutOfBoundsException("line " + l + " doesn't exist");
     }
     grid[l] = cells;

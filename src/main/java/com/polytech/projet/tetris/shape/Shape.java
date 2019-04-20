@@ -5,7 +5,6 @@ import com.polytech.projet.tetris.grid.Grid;
 
 public interface Shape {
 
-
   Grid getGrid();
 
   void rotate(Direction direction);
