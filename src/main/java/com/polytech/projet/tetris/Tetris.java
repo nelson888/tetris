@@ -18,13 +18,13 @@ public class Tetris extends Grid {
 
   private final ShapeFactory shapeFactory;
   private Shape shape;
-  private boolean lost;
+  private boolean gameOver;
 
   public Tetris() {
     super(HEIGHT, WIDTH);
     shapeFactory = new ShapeFactory();
     shape = shapeFactory.createRandomShape();
-    lost = false;
+    gameOver = false;
   }
 
   public void nextFrame(Command command) {
@@ -76,8 +76,8 @@ public class Tetris extends Grid {
         shape.setLine(shape.getLine() + 1);
       } else {
         putInGrid(shape);
-        lost = lost || shape.getLine() - shape.getM() < 0;
-        if (!lost) {
+        gameOver = gameOver || shape.getLine() - shape.getM() < 0;
+        if (!gameOver) {
           shape = shapeFactory.createRandomShape();
         }
       }
@@ -85,10 +85,12 @@ public class Tetris extends Grid {
   }
 
   private void removeFilledLines() {
-    for (int i = getM() - 1; i >= 0; i--) {
+    int i = getM() - 1;
+    while (i >= 0) {
       if (isLineFilled(i)) {
         dropEverythingFrom(i);
-        i++; //to recheck for fullness
+      } else {
+        i--;
       }
     }
   }
@@ -214,7 +216,7 @@ public class Tetris extends Grid {
     System.out.println();
   }
 
-  public boolean hasLost() {
-    return lost;
+  public boolean isGameOver() {
+    return gameOver;
   }
 }

@@ -28,7 +28,7 @@ public class Main {
     AtomicReference<Boolean> quitReference = new AtomicReference<>(false);
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.execute(() -> promptCommands(tetris, commandReference, quitReference));
-    while (!quitReference.get() && !tetris.hasLost()) {
+    while (!quitReference.get() && !tetris.isGameOver()) {
       commandReference.set(Command.IDLE);
       Thread.sleep(DELTA_TIME);
       System.out.println(commandReference.get());
@@ -37,7 +37,7 @@ public class Main {
       tetris.print();
       System.out.println();
     }
-    if (tetris.hasLost()) {
+    if (tetris.isGameOver()) {
       System.out.println("Tu as perdu!!!");
     } else {
       System.out.println("Jeu quitté");
@@ -47,7 +47,7 @@ public class Main {
 
   private static void promptCommands(Tetris tetris, AtomicReference<Command> directionReference, AtomicReference<Boolean> quit) {
     try (Scanner scanner = new Scanner(System.in)) {
-      while (!quit.get() && !tetris.hasLost()) {
+      while (!quit.get() && !tetris.isGameOver()) {
         String next = scanner.next();
         if (next.isEmpty()) {
           continue;

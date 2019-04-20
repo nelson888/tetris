@@ -37,7 +37,7 @@ public class TetrisTest {
         assertEquals("Should be empty", EMPTY, tetris.get(line, col));
       }
     }
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -50,7 +50,7 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", Cell.EMPTY, tetris.get(line, col));
     }
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -84,7 +84,7 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l, col));
     }
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -105,7 +105,7 @@ public class TetrisTest {
     for (int col = 0; col < tetris.getN(); col++) {
       assertEquals("Should be equal", line[col], tetris.get(l + 1, col));
     }
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -115,7 +115,7 @@ public class TetrisTest {
     tetris.nextFrame(Command.IDLE);
     assertEquals("Should have went down", 1, shape.getLine());
     assertEquals("Shouldn't have moved", 0, shape.getColumn());
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -137,7 +137,7 @@ public class TetrisTest {
     tetris.nextFrame(Command.LEFT);
     assertEquals("Shouldn'thave moved", 0, shape.getColumn());
     assertEquals("Should have fell", 1, shape.getLine());
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -149,7 +149,7 @@ public class TetrisTest {
 
     assertEquals("Should've moved", tetris.getN() - shape.getN(), shape.getColumn());
     assertEquals("Shouldn't have moved", 0, shape.getLine());
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -161,7 +161,7 @@ public class TetrisTest {
 
     assertEquals("Shouldn't have moved", tetris.getN() - shape.getN(), shape.getColumn());
     assertEquals("Should have fell", 1, shape.getLine());
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -180,7 +180,7 @@ public class TetrisTest {
         assertEquals("Should have went down", tetris.get(shape.getLine() - line, shape.getColumn() + col), FILLED);
       }
     }
-    assertFalse("Shouldn't have lost", tetris.hasLost());
+    assertFalse("Shouldn't have lost", tetris.isGameOver());
   }
 
   @Test
@@ -193,6 +193,6 @@ public class TetrisTest {
     }
     tetris.nextFrame(Command.IDLE);
 
-    assertTrue("Should have lost", tetris.hasLost());
+    assertTrue("Should have lost", tetris.isGameOver());
   }
 }
