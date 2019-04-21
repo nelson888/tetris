@@ -151,7 +151,9 @@ public class Tetris extends Grid {
     for (int line = 0; line < shapeGrid.getM(); line++) {
       for (int col = 0; col < shapeGrid.getN(); col++) {
         Cell cell = shapeGrid.get(line, col);
-        setSafely(shape.getLine() - line, shape.getColumn() + col, cell);
+        if (cell != EMPTY) {
+          setSafely(shape.getLine() - line, shape.getColumn() + col, cell);
+        }
       }
     }
   }

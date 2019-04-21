@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
-  private static final long DELTA_TIME = 800; // in ms
+  private static final long DELTA_TIME = 400; // in ms
 
   public static void main(String[] args) throws InterruptedException {
     Tetris tetris = new Tetris();
