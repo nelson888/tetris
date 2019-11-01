@@ -180,7 +180,7 @@ public class Tetris extends Grid {
     this.shape = shape;
   }
 
-  public void print() {
+  public Grid getPrintGrid() {
     Grid printGrid = copy();
     if (shape != null) {
       Grid shapeGrid = shape.getGrid();
@@ -193,7 +193,11 @@ public class Tetris extends Grid {
         }
       }
     }
+    return printGrid;
+  }
 
+  public void print() {
+    Grid printGrid = getPrintGrid();
     for (int line = 0; line < getM(); line++) {
       System.out.print(line + "\t|");
       for (int col = 0; col < getN(); col++) {
