@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Main {
+public class CommandLineTetris {
 
   private static final long DELTA_TIME = 400; // in ms
 
